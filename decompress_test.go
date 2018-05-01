@@ -5,7 +5,7 @@ import (
 )
 
 func TestDecompressSimpleString(t *testing.T) {
-  decompressed, _ := decompress([]byte("abc"), false)
+  decompressed, _ := Decompress([]byte("abc"), false)
 
   if string(decompressed) != "abc" {
     t.Fail()
@@ -14,7 +14,7 @@ func TestDecompressSimpleString(t *testing.T) {
 }
 
 func TestDecompressSingleCompression(t *testing.T) {
-  decompressed, _ := decompress([]byte("3[abc]"), false)
+  decompressed, _ := Decompress([]byte("3[abc]"), false)
 
   if string(decompressed) != "abcabcabc" {
 	t.Fail()
@@ -23,7 +23,7 @@ func TestDecompressSingleCompression(t *testing.T) {
 }
 
 func TestDecompressSingleCompressionPlusSimpleString(t *testing.T) {
-  decompressed, _ := decompress([]byte("3[abc]xyz"), false)
+  decompressed, _ := Decompress([]byte("3[abc]xyz"), false)
 
   if string(decompressed) != "abcabcabcxyz" {
 	t.Fail()
@@ -32,7 +32,7 @@ func TestDecompressSingleCompressionPlusSimpleString(t *testing.T) {
 }
 
 func TestDecompresshMultipleLinearCompression(t *testing.T) {
-  decompressed, _ := decompress([]byte("3[abc]2[efg]"), false)
+  decompressed, _ := Decompress([]byte("3[abc]2[efg]"), false)
 
   if string(decompressed) != "abcabcabcefgefg" {
 	t.Fail()
@@ -41,7 +41,7 @@ func TestDecompresshMultipleLinearCompression(t *testing.T) {
 }
 
 func TestDecompressMultipleLinearCompressionWithSimpleStringBetween(t *testing.T) {
-  decompressed, _ := decompress([]byte("3[abc]gosh2[efg]"), false)
+  decompressed, _ := Decompress([]byte("3[abc]gosh2[efg]"), false)
 
   if string(decompressed) != "abcabcabcgoshefgefg" {
 	t.Fail()
@@ -50,7 +50,7 @@ func TestDecompressMultipleLinearCompressionWithSimpleStringBetween(t *testing.T
 }
 
 func TestDecompressSimpleNested(t *testing.T) {
-  decompressed, _ := decompress([]byte("3[2[a]]"), false)
+  decompressed, _ := Decompress([]byte("3[2[a]]"), false)
 
   if string(decompressed) != "aaaaaa" {
 	t.Fail()
@@ -59,7 +59,7 @@ func TestDecompressSimpleNested(t *testing.T) {
 }
 
 func TestDecompressMultipleNested(t *testing.T) {
-  decompressed, _ := decompress([]byte("3[2[3[a]]]"), false)
+  decompressed, _ := Decompress([]byte("3[2[3[a]]]"), false)
 
   if string(decompressed) != "aaaaaaaaaaaaaaaaaa" {
 	t.Fail()
@@ -68,7 +68,7 @@ func TestDecompressMultipleNested(t *testing.T) {
 }
 
 func TestDecompressSimpleNestedAndLinearString(t *testing.T) {
-  decompressed, _ := decompress([]byte("3[2[a]c]"), false)
+  decompressed, _ := Decompress([]byte("3[2[a]c]"), false)
 
   if string(decompressed) != "aacaacaac" {
 	t.Fail()
@@ -77,7 +77,7 @@ func TestDecompressSimpleNestedAndLinearString(t *testing.T) {
 }
 
 func TestDecompressSimpleNestedAndMultipleLinear(t *testing.T) {
-  decompressed, _ := decompress([]byte("3[2[a]2[c]]"), false)
+  decompressed, _ := Decompress([]byte("3[2[a]2[c]]"), false)
 
   if string(decompressed) != "aaccaaccaacc" {
 	t.Fail()

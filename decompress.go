@@ -4,29 +4,7 @@ import (
   "strconv"
 )
 
-func sliceRepeatCopy(src [] byte, repeat int) []byte {
-
-  destination := make([]byte, 0)
-
-  for i := 0; i < repeat; i++ {
-
-	for _, sliceValue := range src {
-	  destination = append(destination, sliceValue)
-	}
-
-  }
-  return destination
-}
-
-func slideAppend(dest [] byte, src [] byte) []byte {
-
-  for _, uncompByte := range src {
-	dest = append(dest, uncompByte)
-  }
-  return dest
-}
-
-func decompress(compressed []byte, finishEarly bool) ([]byte, int) {
+func Decompress(compressed []byte, finishEarly bool) ([]byte, int) {
 
   var (
 	dataCompressed = make([]byte, 0)
@@ -94,4 +72,26 @@ func decompress(compressed []byte, finishEarly bool) ([]byte, int) {
 
   return uncompressedResult, index
 
+}
+
+func sliceRepeatCopy(src [] byte, repeat int) []byte {
+
+  destination := make([]byte, 0)
+
+  for i := 0; i < repeat; i++ {
+
+	for _, sliceValue := range src {
+	  destination = append(destination, sliceValue)
+	}
+
+  }
+  return destination
+}
+
+func slideAppend(dest [] byte, src [] byte) []byte {
+
+  for _, uncompByte := range src {
+	dest = append(dest, uncompByte)
+  }
+  return dest
 }
